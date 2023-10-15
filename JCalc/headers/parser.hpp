@@ -70,6 +70,6 @@ public:
 	void advance_token();
 	ExpressionNode* parse_number();
 	ExpressionNode* parse_expression(Precedence prev_precedence);
-	ExpressionNode* parse_infix_expression(Token operand, ExpressionNode* left);
+	ExpressionNode* parse_binary_expression(Token operand, ExpressionNode* left);
 	ExpressionNode* parse_terminal_expression();
 };

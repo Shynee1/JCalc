@@ -31,8 +31,9 @@ Parser::~Parser() {
 }
 
 ExpressionNode* Parser::parse_expression(Precedence prev_prec) {
+	// Read first operand / advance parser
 	ExpressionNode* left = parse_terminal_expression();
-
+	// Read operator and get precendce
 	Token curr_op = currentToken;
 	Precedence curr_prec = precedence_lookup[currentToken.type];
 
@@ -40,14 +41,15 @@ ExpressionNode* Parser::parse_expression(Precedence prev_prec) {
 		if (prev_prec >= curr_prec) break;
 
 		advance_token();
-		left = parse_infix_expression(curr_op, left);
+		// Recursively parse new expression
+		left = parse_binary_expression(curr_op, left);
 		curr_op = currentToken;
 		curr_prec = precedence_lookup[curr_op.type];
 	}
 	return left;
 }
 
-ExpressionNode* Parser::parse_infix_expression(Token op, ExpressionNode* left) {
+ExpressionNode* Parser::parse_binary_expression(Token op, ExpressionNode* left) {
 	BinaryNode* ret = nullptr;
 	
 	switch (op.type) {
@@ -65,7 +67,7 @@ ExpressionNode* Parser::parse_infix_expression(Token op, ExpressionNode* left) {
 }
 
 ExpressionNode* Parser::parse_terminal_expression() {
-	ExpressionNode* ret = 0;
+	ExpressionNode* ret = nullptr;
 
 	if (currentToken.type == TokenType_Number) {
 		ret = parse_number();
