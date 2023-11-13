@@ -5,3 +5,11 @@ Follows the order of operations / PEMDAS.
 - Tokenize string expression
 - Create AST using Pratt Parsing
 - Evaluate AST to double
+
+## **Instructions**
+- Download and extract the zip folder from 'releases'
+- Run the file named 'build.bat' with administrator privileges
+- Navigate to Windows Advanced System Settings
+- Click 'Environment Variables'
+- Go to 'System Variables' and select 'PATH'
+- Add 'C:\Program Files\jcalc'
