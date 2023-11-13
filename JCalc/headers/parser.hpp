@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "lexer.hpp"
 
 enum ExpressionType {

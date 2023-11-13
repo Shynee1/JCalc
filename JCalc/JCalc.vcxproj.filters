@@ -15,25 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lexer.hpp">
+    <ClInclude Include="headers\jcalc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="jcalc.hpp">
+    <ClInclude Include="headers\lexer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lexer.cpp">
+    <ClCompile Include="source\lexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="parser.cpp">
+    <ClCompile Include="source\parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="parser.hpp" />
+    <None Include="headers\parser.hpp">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="build.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
