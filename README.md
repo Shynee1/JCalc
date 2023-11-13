@@ -2,7 +2,7 @@
 Simple CLI tool to parse math expressions. \
 Follows the order of operations / PEMDAS.
 
-## **Use**
+## **Documentation**
 - Open any Windows CLI (Command Prompt, PowerShell)
 - Run 'jcalc \<expression>'
 ```
