@@ -6,7 +6,11 @@ Follows the order of operations / PEMDAS.
 - Create AST using Pratt Parsing
 - Evaluate AST to double
 
-## **Instructions**
+##**Use**
+- Open any Windows CLI (Command Prompt, PowerShell)
+- Run 'jcalc <expression>'
+
+## **Build Instructions**
 - Download and extract the zip folder from 'releases'
 - Run the file named 'build.bat' with administrator privileges
 - Navigate to Windows Advanced System Settings
