@@ -9,6 +9,11 @@ Follows the order of operations / PEMDAS.
 ## **Use**
 - Open any Windows CLI (Command Prompt, PowerShell)
 - Run 'jcalc \<expression>'
+Example: \
+```
+jcalc 3(2 + 3) - 4(3 * 4) / 42
+3\
+```
 
 ## **Build Instructions**
 - Download and extract the zip folder from 'releases'
