@@ -6,7 +6,7 @@ Follows the order of operations / PEMDAS.
 - Create AST using Pratt Parsing
 - Evaluate AST to double
 
-##**Use**
+## **Use**
 - Open any Windows CLI (Command Prompt, PowerShell)
 - Run 'jcalc <expression>'
 
