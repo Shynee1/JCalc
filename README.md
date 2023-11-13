@@ -1,5 +1,5 @@
 # JCalc
-Simple CLI tool to parse math expressions
+Simple CLI tool to parse math expressions \
 Follows the order-of-operations / PEMDAS
 ## **Features**
 - Tokenize string expression
