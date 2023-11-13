@@ -1,10 +1,6 @@
 # JCalc
 Simple CLI tool to parse math expressions. \
 Follows the order of operations / PEMDAS.
-## **Features**
-- Tokenize string expression
-- Create AST using Pratt Parsing
-- Evaluate AST to double
 
 ## **Use**
 - Open any Windows CLI (Command Prompt, PowerShell)
@@ -20,3 +16,9 @@ jcalc 3(2 + 3) - 4(3 * 4) / 42
 - Click 'Environment Variables'
 - Go to 'System Variables' and select 'PATH'
 - Add 'C:\Program Files\jcalc'
+
+## **How It Works**
+- Tokenizes string expression
+- Creates AST using Pratt Parsing
+- Evaluates AST to double
+
