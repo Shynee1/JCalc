@@ -8,7 +8,7 @@ Follows the order of operations / PEMDAS.
 
 ## **Use**
 - Open any Windows CLI (Command Prompt, PowerShell)
-- Run 'jcalc <expression>'
+- Run 'jcalc \<expression\>'
 
 ## **Build Instructions**
 - Download and extract the zip folder from 'releases'
