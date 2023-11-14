@@ -6,7 +6,7 @@ Follows the order of operations / PEMDAS.
 - Open any Windows CLI (Command Prompt, PowerShell)
 - Run 'jcalc \<expression>'
 ```
-jcalc 3(2 + 3) - 4(3 * 4) / 42
+jcalc "3(2 + 3) - 4(3 * 4) / 42"
 ```
 
 ## **Build Instructions**
