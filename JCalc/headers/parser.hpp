@@ -52,13 +52,15 @@ struct UnaryNode : public ExpressionNode {
 	ExpressionNode* operand;
 	UnaryNode(ExpressionNode* op, ExpressionType eType) : operand(op) { this->type = eType; };
 	double evaluate();
+	~UnaryNode() { delete operand; };
 };
 
 struct BinaryNode : public ExpressionNode {
-	ExpressionNode* right;
-	ExpressionNode* left;
+	ExpressionNode* right = nullptr;
+	ExpressionNode* left = nullptr;
 	BinaryNode(ExpressionType type) { this->type = type; };
 	double evaluate();
+	~BinaryNode() { delete left; delete right; };
 };
 
 class Parser {
