@@ -22,17 +22,13 @@ double BinaryNode::evaluate() {
 }
 
 Parser::Parser(std::string expression) {
-	this->lexer = new Lexer(expression);
+	this->lexer = make_unique<Lexer>(expression);
 	this->currentToken = lexer->next_token();
 }
 
-Parser::~Parser() {
-	delete lexer;
-}
-
-ExpressionNode* Parser::parse_expression(Precedence prev_prec) {
+unique_ptr<ExpressionNode> Parser::parse_expression(Precedence prev_prec) {
 	// Read first operand / advance parser
-	ExpressionNode* left = parse_terminal_expression();
+	auto left = parse_terminal_expression();
 	// Read operator and get precendce
 	Token curr_op = currentToken;
 	Precedence curr_prec = precedence_lookup[currentToken.type];
@@ -49,25 +45,26 @@ ExpressionNode* Parser::parse_expression(Precedence prev_prec) {
 	return left;
 }
 
-ExpressionNode* Parser::parse_binary_expression(Token op, ExpressionNode* left) {
-	BinaryNode* ret = nullptr;
+unique_ptr<ExpressionNode> Parser::parse_binary_expression(Token op, unique_ptr<ExpressionNode> &left) {
+	auto ret = unique_ptr<BinaryNode>{};
 	
 	switch (op.type) {
-		case TokenType_Plus: ret = new BinaryNode(ExpressionType_Add); break;
-		case TokenType_Minus: ret = new BinaryNode(ExpressionType_Sub); break;
-		case TokenType_Star: ret = new BinaryNode(ExpressionType_Mul); break;
-		case TokenType_Slash: ret = new BinaryNode(ExpressionType_Div); break;
-		case TokenType_Caret: ret = new BinaryNode(ExpressionType_Pow); break;
-		default: { throw std::invalid_argument("ERROR: Invalid operator '" + op.lexeme + "'"); }
+		case TokenType_Plus: ret = make_unique<BinaryNode>(ExpressionType_Add); break;
+		case TokenType_Minus: ret = make_unique<BinaryNode>(ExpressionType_Sub); break;
+		case TokenType_Star: ret = make_unique<BinaryNode>(ExpressionType_Mul); break;
+		case TokenType_Slash: ret = make_unique<BinaryNode>(ExpressionType_Div); break;
+		case TokenType_Caret: ret = make_unique<BinaryNode>(ExpressionType_Pow); break;
+		default: { throw invalid_argument("ERROR: Invalid operator '" + op.lexeme + "'"); }
 	}
 	
-	ret->left = left;
+	ret->left = std::move(left);
 	ret->right = parse_expression(precedence_lookup[op.type]);
+
 	return ret;
 }
 
-ExpressionNode* Parser::parse_terminal_expression() {
-	ExpressionNode* ret = nullptr;
+unique_ptr<ExpressionNode> Parser::parse_terminal_expression() {
+	auto ret = unique_ptr<ExpressionNode>{};
 
 	if (currentToken.type == TokenType_Number) {
 		ret = parse_number();
@@ -79,19 +76,19 @@ ExpressionNode* Parser::parse_terminal_expression() {
 	}
 	else if (currentToken.type == TokenType_Plus) {
 		advance_token();
-		ret = new UnaryNode(parse_terminal_expression(), ExpressionType_Positive);
+		ret = make_unique<UnaryNode>(parse_terminal_expression(), ExpressionType_Positive);
 	}
 	else if (currentToken.type == TokenType_Minus) {
 		advance_token();
-		ret = new UnaryNode(parse_terminal_expression(), ExpressionType_Negative);
+		ret = make_unique<UnaryNode>(parse_terminal_expression(), ExpressionType_Negative);
 	}
 
 	// Handle implicit multplication
 	if (currentToken.type == TokenType_Number || currentToken.type == TokenType_Parentheses_Open) {
-		BinaryNode* new_ret = new BinaryNode(ExpressionType_Mul);
-		new_ret->left = ret;
+		auto new_ret = make_unique<BinaryNode>(ExpressionType_Mul);
+		new_ret->left = std::move(ret);
 		new_ret->right = parse_expression(Precedence_Factor);
-		ret = new_ret;
+		ret = std::move(new_ret);
 	}
 
 
@@ -102,8 +99,8 @@ void Parser::advance_token() {
 	this->currentToken = lexer->next_token();
 }
 
-ExpressionNode* Parser::parse_number() {
+unique_ptr<ExpressionNode> Parser::parse_number() {
 	double num = stod(currentToken.lexeme);
 	advance_token();
-	return new NumberNode(num);
+	return make_unique<NumberNode>(num);
 }

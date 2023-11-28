@@ -20,7 +20,7 @@ struct Token {
     TokenType type;
     std::string lexeme;
     Token(TokenType t, std::string l) : type(t), lexeme(l) {}
-    Token() {}
+    Token() { this->type = TokenType_Error; }
 };
 
 class Lexer {

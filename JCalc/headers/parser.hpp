@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <memory>
 #include "lexer.hpp"
 
 enum ExpressionType {
@@ -38,7 +39,7 @@ static Precedence precedence_lookup[] = {
 };
 
 struct ExpressionNode {
-	ExpressionType type;
+	ExpressionType type = ExpressionType_Error;
 	virtual double evaluate() = 0;
 };
 
@@ -49,30 +50,27 @@ struct NumberNode : public ExpressionNode {
 };
 
 struct UnaryNode : public ExpressionNode {
-	ExpressionNode* operand;
-	UnaryNode(ExpressionNode* op, ExpressionType eType) : operand(op) { this->type = eType; };
+	std::unique_ptr<ExpressionNode> operand;
+	UnaryNode(std::unique_ptr<ExpressionNode> op, ExpressionType eType) { this->type = eType; this->operand = std::move(op); };
 	double evaluate();
-	~UnaryNode() { delete operand; };
 };
 
 struct BinaryNode : public ExpressionNode {
-	ExpressionNode* right = nullptr;
-	ExpressionNode* left = nullptr;
+	std::unique_ptr<ExpressionNode> left;
+	std::unique_ptr<ExpressionNode> right;
 	BinaryNode(ExpressionType type) { this->type = type; };
 	double evaluate();
-	~BinaryNode() { delete left; delete right; };
 };
 
 class Parser {
 private:
-	Lexer* lexer;
+	std::unique_ptr<Lexer> lexer;
 	Token currentToken;
 public:
 	Parser(std::string expression);
-	~Parser();
 	void advance_token();
-	ExpressionNode* parse_number();
-	ExpressionNode* parse_expression(Precedence prev_precedence);
-	ExpressionNode* parse_binary_expression(Token operand, ExpressionNode* left);
-	ExpressionNode* parse_terminal_expression();
+	std::unique_ptr<ExpressionNode> parse_number();
+	std::unique_ptr<ExpressionNode> parse_expression(Precedence prev_precedence);
+	std::unique_ptr<ExpressionNode> parse_binary_expression(Token operand, std::unique_ptr<ExpressionNode> &left);
+	std::unique_ptr<ExpressionNode> parse_terminal_expression();
 };
